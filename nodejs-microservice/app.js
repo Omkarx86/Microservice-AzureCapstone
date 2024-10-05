@@ -8,7 +8,7 @@ app.use(bodyParser.json());
 
 // Simple GET endpoint
 app.get('/', (req, res) => {
-    res.send('Welcome to the Node.js Microservice!');
+    res.send('Welcome to the Node.js Microservice! Version2');
 });
 
 // POST endpoint to process data
