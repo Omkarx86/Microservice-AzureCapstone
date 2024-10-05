@@ -22,3 +22,18 @@ jobs:
 
     - name: Push Docker image to ACR
       run: docker push ${{ secrets.ACR_USERNAME }}.azurecr.io/nodejsmicroservice:${{ github.sha }}
+    
+    - name: Azure Login
+      uses: azure/login@v1
+      with:
+        creds: ${{ secrets.AZURE_CREDENTIALS }}  # Azure Service Principal
+
+    - name: Update ACI with new image
+      run: |
+        az container update \
+          --resource-group CapstoneResourceGroup \
+          --name capstoneacisameer \
+          --image capstonesameeracr.azurecr.io/nodejsmicroservice:${{ github.sha }} \
+          --registry-login-server capstonesameeracr.azurecr.io \
+          --registry-username ${{ secrets.ACR_USERNAME }} \
+          --registry-password ${{ secrets.ACR_PASSWORD }}
