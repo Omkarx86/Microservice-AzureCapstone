@@ -30,4 +30,4 @@ jobs:
 
     - name: Update ACI with new image
       run: |
-        az container update --resource-group CapstoneResourceGroup --name capstoneacisameer --image capstonesameeracr.azurecr.io/nodejsmicroservice:${{ github.sha }} --registry-login-server capstonesameeracr.azurecr.io --registry-username ${{ secrets.ACR_USERNAME }} --registry-password ${{ secrets.ACR_PASSWORD }}
+        az container create --resource-group CapstoneResourceGroup --name capstoneacisameer --image capstonesameeracr.azurecr.io/nodejsmicroservice:${{ github.sha }} --registry-login-server capstonesameeracr.azurecr.io --registry-username ${{ secrets.ACR_USERNAME }} --registry-password ${{ secrets.ACR_PASSWORD }}
