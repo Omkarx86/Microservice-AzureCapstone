@@ -1,36 +1,24 @@
-name: CI/CD Pipeline
+name: Build and Push Docker Image to ACR
 
 on:
   push:
-    branches: [ main ]
-  pull_request:
-    branches: [ main ]
+    branches:
+      - main
 
 jobs:
-  build-and-push:
+  build:
     runs-on: ubuntu-latest
 
     steps:
-    - name: Checkout code
+    - name: Checkout repository
       uses: actions/checkout@v2
 
     - name: Log in to Azure Container Registry
-      uses: azure/docker-login@v1
-      with:
-        login-server: capstoneacrsameer.azurecr.io
-        username: ${{ secrets.ACR_USERNAME }}
-        password: ${{ secrets.ACR_PASSWORD }}
-
-    - name: Build and push Docker image
       run: |
-        docker build -t capstoneacrsameer.azurecr.io/nodejsmicroservice:${{ github.sha }} ./nodejs-microservice
-        docker push capstoneacrsameer.azurecr.io/nodejsmicroservice:${{ github.sha }}
+        echo ${{ secrets.ACR_PASSWORD }} | docker login ***.azurecr.io --username ${{ secrets.ACR_USERNAME }} --password-stdin
 
-    - name: Update Azure Container Instance
-      uses: azure/CLI@v1
-      with:
-        inlineScript: |
-          az container update \
-            --resource-group CapstoneResourceGroup \
-            --name capstoneacisameer \
-            --image capstoneacrsameer.azurecr.io/nodejsmicroservice:${{ github.sha }}
+    - name: Build Docker image
+      run: docker build -t ***.azurecr.io/nodejsmicroservice:${{ github.sha }} ./nodejs-microservice
+
+    - name: Push Docker image to ACR
+      run: docker push ***.azurecr.io/nodejsmicroservice:${{ github.sha }}
