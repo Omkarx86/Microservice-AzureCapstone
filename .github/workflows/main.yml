@@ -23,8 +23,8 @@ jobs:
 
     - name: Build and push Docker image
       run: |
-        docker build -t capstoneacrsameer.azurecr.io/microservice:${{ github.sha }} .
-        docker push capstoneacrsameer.azurecr.io/microservice:${{ github.sha }}
+        docker build -t capstoneacrsameer.azurecr.io/nodejsmicroservice:${{ github.sha }} .
+        docker push capstoneacrsameer.azurecr.io/nodejsmicroservice:${{ github.sha }}
 
     - name: Update Azure Container Instance
       uses: azure/CLI@v1
@@ -33,4 +33,4 @@ jobs:
           az container update \
             --resource-group CapstoneResourceGroup \
             --name capstoneacisameer \
-            --image capstoneacrsameer.azurecr.io/microservice:${{ github.sha }}
+            --image capstoneacrsameer.azurecr.io/nodejsmicroservice:${{ github.sha }}
