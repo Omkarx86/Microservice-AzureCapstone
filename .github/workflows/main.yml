@@ -23,7 +23,7 @@ jobs:
 
     - name: Build and push Docker image
       run: |
-        docker build -t capstoneacrsameer.azurecr.io/nodejsmicroservice:${{ github.sha }} .
+        docker build -t capstoneacrsameer.azurecr.io/nodejsmicroservice:${{ github.sha }} ./nodejs-microservice
         docker push capstoneacrsameer.azurecr.io/nodejsmicroservice:${{ github.sha }}
 
     - name: Update Azure Container Instance
